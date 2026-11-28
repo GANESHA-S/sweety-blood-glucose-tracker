@@ -77,7 +77,10 @@ const getDailyReport = async (req, res) => {
 
         // Fetch individual readings
         const result = await pool.query(
-            `SELECT id, reading_date, time_slot, glucose_value
+            `SELECT id,
+                TO_CHAR(reading_date, 'YYYY-MM-DD') AS reading_date,
+                time_slot,
+                glucose_value
              FROM readings
              WHERE user_id = $1
              AND reading_date = $2
