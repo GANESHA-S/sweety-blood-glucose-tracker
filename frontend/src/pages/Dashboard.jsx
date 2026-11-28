@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   getReadings,
@@ -31,6 +32,13 @@ const slotLabels = {
 };
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   const [readings, setReadings] = useState([]);
   const [formData, setFormData] = useState(initialFormData);
 
@@ -164,8 +172,16 @@ function Dashboard() {
   return (
     <div>
       <h1>Sweety Dashboard</h1>
-
+      <button onClick={handleLogout}>
+        Logout
+      </button>
       <p>Welcome to your Blood Glucose Tracker.</p>
+
+      <div>
+        <Link to="/reports">View Reports</Link>
+      </div>
+
+      <br />
 
       {error && (
         <p style={{ color: "red" }}>{error}</p>
