@@ -138,13 +138,17 @@ const addReading = async (req, res) => {
 };
 
 // GET ALL READINGS
+
 const getReadings = async (req, res) => {
     try {
         const userId = req.user.userId;
 
         const result = await pool.query(
-            `SELECT id, reading_date, time_slot,
-                    glucose_value, created_at
+            `SELECT id,
+                    TO_CHAR(reading_date, 'YYYY-MM-DD') AS reading_date,
+                    time_slot,
+                    glucose_value,
+                    created_at
              FROM readings
              WHERE user_id = $1
              ORDER BY reading_date DESC, id DESC`,
@@ -164,6 +168,7 @@ const getReadings = async (req, res) => {
         });
     }
 };
+
 
 
 
